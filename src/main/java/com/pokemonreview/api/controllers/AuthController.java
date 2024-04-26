@@ -1,11 +1,13 @@
 package com.pokemonreview.api.controllers;
 
+import com.pokemonreview.api.dto.AuthResponseDto;
 import com.pokemonreview.api.dto.LoginDto;
 import com.pokemonreview.api.dto.RegisterDto;
 import com.pokemonreview.api.models.Role;
 import com.pokemonreview.api.models.UserEntity;
 import com.pokemonreview.api.repository.RoleRepository;
 import com.pokemonreview.api.repository.UserRepository;
+import com.pokemonreview.api.security.JWTGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,23 +32,26 @@ public class AuthController {
     private final RoleRepository roleRepositor;
     private final PasswordEncoder passwordEncoder;
 
+    private final JWTGenerator jwtGenerator;
+
     @Autowired
-    public AuthController(AuthenticationManager authenticationManager, UserRepository userRepository, RoleRepository roleRepositor, PasswordEncoder passwordEncoder) {
+    public AuthController(AuthenticationManager authenticationManager, UserRepository userRepository, RoleRepository roleRepositor, PasswordEncoder passwordEncoder, JWTGenerator jwtGenerator) {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
         this.roleRepositor = roleRepositor;
         this.passwordEncoder = passwordEncoder;
+        this.jwtGenerator = jwtGenerator;
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginDto loginDto) {
+    public ResponseEntity<AuthResponseDto> login(@RequestBody LoginDto loginDto) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginDto.getUsername(),
                 loginDto.getPassword()));
-
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        return new ResponseEntity<>("User signed success!", HttpStatus.OK);
+        String token = jwtGenerator.generateToken(authentication);
+        return new ResponseEntity<>(new AuthResponseDto(token), HttpStatus.OK);
     }
 
 

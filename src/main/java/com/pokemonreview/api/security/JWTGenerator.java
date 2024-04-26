@@ -18,12 +18,11 @@ public class JWTGenerator {
         Date currenDate = new Date();
         Date expireDate = new Date(currenDate.getTime() + SecurityConstants.JWT_EXPIRATION);
 
-
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(currenDate)
                 .setExpiration(expireDate)
-                .signWith(SignatureAlgorithm.ES512, SecurityConstants.JWT_SECRET)
+                .signWith(SignatureAlgorithm.HS512, SecurityConstants.JWT_SECRET)
                 .compact();
     }
 
