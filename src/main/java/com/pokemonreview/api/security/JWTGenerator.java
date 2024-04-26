@@ -18,6 +18,7 @@ public class JWTGenerator {
         Date currenDate = new Date();
         Date expireDate = new Date(currenDate.getTime() + SecurityConstants.JWT_EXPIRATION);
 
+        // TODO - Add all the roles that the user have access on the jwt
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(currenDate)

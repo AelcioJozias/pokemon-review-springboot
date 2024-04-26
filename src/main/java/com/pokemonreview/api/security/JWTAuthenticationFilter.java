@@ -37,6 +37,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
             String userName = jwtGenerator.getUsernameFromJWT(token);
 
+            // TODO -  here should have all the roles access information's, not needing get on the database
             UserDetails userDetails = customUserDetailService.loadUserByUsername(userName);
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null,
                     userDetails.getAuthorities());
