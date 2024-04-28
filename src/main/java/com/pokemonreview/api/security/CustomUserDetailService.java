@@ -30,6 +30,8 @@ public class CustomUserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        // TODO - here the correct is receive by parameter the GrantendAuthorits, so you dont need look for this all the time
+        // TODO - but to the firts time, this is the correct way, bacause you need charge this informations to put this on the jwt
         UserEntity userEntity = userRepository.findByName(username).orElseThrow(() -> new UsernameNotFoundException("Usernname not found"));
         return new User(userEntity.getName(), userEntity.getPassword(), mapRolesToGrantedAuthority(userEntity.getRoles()));
     }
