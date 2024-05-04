@@ -1,25 +1,30 @@
 package com.pokemonreview.api.controllers;
 
 
-import com.pokemonreview.api.dto.PokemonDto;
-import com.pokemonreview.api.dto.PokemonResponse;
-import com.pokemonreview.api.models.Pokemon;
-import com.pokemonreview.api.service.PokemonService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import com.pokemonreview.api.dto.PokemonDto;
+import com.pokemonreview.api.dto.PokemonResponse;
+import com.pokemonreview.api.service.PokemonService;
 
 @RestController
 @RequestMapping("/api/")
 public class PokemonController {
 
-    private PokemonService pokemonService;
+    private final PokemonService pokemonService;
 
-    @Autowired
     public PokemonController(PokemonService pokemonService) {
         this.pokemonService = pokemonService;
     }

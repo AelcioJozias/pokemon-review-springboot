@@ -1,10 +1,9 @@
 package com.pokemonreview.api.security;
 
-import com.pokemonreview.api.models.Role;
-import com.pokemonreview.api.models.UserEntity;
-import com.pokemonreview.api.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -13,9 +12,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
+import com.pokemonreview.api.models.Role;
+import com.pokemonreview.api.models.UserEntity;
+import com.pokemonreview.api.repository.UserRepository;
 
 
 @Service
@@ -23,7 +22,6 @@ public class CustomUserDetailService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
-    @Autowired
     public CustomUserDetailService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
